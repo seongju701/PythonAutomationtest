@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="9.851" timestamp="2025-03-24T13:05:01.863086+09:00" hostname="sjcho88-PC"><testcase classname="tests.test_e2e.TestOne" name="test_e2e" time="6.808" /><testcase classname="tests.test_e2e.TestOne" name="test_e2e2" time="2.729"><failure message="selenium.common.exceptions.InvalidSelectorException: Message: invalid selector: Unable to locate an element with the xpath expression div/44h4 because of the following error:&#10;SyntaxError: Failed to execute 'evaluate' on 'Document': The string 'div/44h4' is not a valid XPath expression.&#10;  (Session info: chrome=134.0.6998.118); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception&#10;Stacktrace:&#10;&#09;GetHandleVerifier [0x00007FF67BBA4C25+3179557]&#10;&#09;(No symbol) [0x00007FF67B8088A0]&#10;&#09;(No symbol) [0x00007FF67B6991CA]&#10;&#09;(No symbol) [0x00007FF67B6A0B98]&#10;&#09;(No symbol) [0x00007FF67B6A3BCC]&#10;&#09;(No symbol) [0x00007FF67B6A3C9F]&#10;&#09;(No symbol) [0x00007FF67B6EF320]&#10;&#09;(No symbol) [0x00007FF67B6EFC9C]&#10;&#09;(No symbol) [0x00007FF67B6E240C]&#10;&#09;(No symbol) [0x00007FF67B717C6F]&#10;&#09;(No symbol) [0x00007FF67B6E22D6]&#10;&#09;(No symbol) [0x00007FF67B717E40]&#10;&#09;(No symbol) [0x00007FF67B7402F3]&#10;&#09;(No symbol) [0x00007FF67B717A03]&#10;&#09;(No symbol) [0x00007FF67B6E06D0]&#10;&#09;(No symbol) [0x00007FF67B6E1983]&#10;&#09;GetHandleVerifier [0x00007FF67BC067CD+3579853]&#10;&#09;GetHandleVerifier [0x00007FF67BC1D1D2+3672530]&#10;&#09;GetHandleVerifier [0x00007FF67BC12153+3627347]&#10;&#09;GetHandleVerifier [0x00007FF67B97092A+868650]&#10;&#09;(No symbol) [0x00007FF67B812FFF]&#10;&#09;(No symbol) [0x00007FF67B80F4A4]&#10;&#09;(No symbol) [0x00007FF67B80F646]&#10;&#09;(No symbol) [0x00007FF67B7FEAA9]&#10;&#09;BaseThreadInitThunk [0x00007FFFCD147614+20]&#10;&#09;RtlUserThreadStart [0x00007FFFCF0826A1+33]">self = &lt;tests.test_e2e.TestOne object at 0x000001FE6F683610&gt;
+setup = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="18de791e3c2a7ac8635b0a009550ba6c")&gt;
+
+    def test_e2e2(self,setup):
+        setup.find_element(By.XPATH,"/html/body/app-root/app-navbar/div/nav/ul/li[2]/a").click()
+        products = setup.find_elements(By.XPATH,"/html/body/app-root/app-shop/div/div/div[2]/app-card-list/app-card/div")
+        print(len(products))
+        for product in products:
+&gt;           a = product.find_element(By.XPATH,"div/44h4").text
+
+tests\test_e2e.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webelement.py:601: in find_element
+    return self._execute(Command.FIND_CHILD_ELEMENT, {"using": by, "value": value})["value"]
+..\..\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webelement.py:572: in _execute
+    return self._parent.execute(command, params)
+..\..\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py:429: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000001FE6F692510&gt;
+response = {'status': 400, 'value': '{"value":{"error":"invalid selector","message":"invalid selector: Unable to locate an elemen...07FF67B7FEAA9]\\n\\tBaseThreadInitThunk [0x00007FFFCD147614+20]\\n\\tRtlUserThreadStart [0x00007FFFCF0826A1+33]\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -&gt; None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "&lt;anonymous&gt;")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "&lt;anonymous&gt;")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+&gt;       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.InvalidSelectorException: Message: invalid selector: Unable to locate an element with the xpath expression div/44h4 because of the following error:
+E       SyntaxError: Failed to execute 'evaluate' on 'Document': The string 'div/44h4' is not a valid XPath expression.
+E         (Session info: chrome=134.0.6998.118); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+E       Stacktrace:
+E       	GetHandleVerifier [0x00007FF67BBA4C25+3179557]
+E       	(No symbol) [0x00007FF67B8088A0]
+E       	(No symbol) [0x00007FF67B6991CA]
+E       	(No symbol) [0x00007FF67B6A0B98]
+E       	(No symbol) [0x00007FF67B6A3BCC]
+E       	(No symbol) [0x00007FF67B6A3C9F]
+E       	(No symbol) [0x00007FF67B6EF320]
+E       	(No symbol) [0x00007FF67B6EFC9C]
+E       	(No symbol) [0x00007FF67B6E240C]
+E       	(No symbol) [0x00007FF67B717C6F]
+E       	(No symbol) [0x00007FF67B6E22D6]
+E       	(No symbol) [0x00007FF67B717E40]
+E       	(No symbol) [0x00007FF67B7402F3]
+E       	(No symbol) [0x00007FF67B717A03]
+E       	(No symbol) [0x00007FF67B6E06D0]
+E       	(No symbol) [0x00007FF67B6E1983]
+E       	GetHandleVerifier [0x00007FF67BC067CD+3579853]
+E       	GetHandleVerifier [0x00007FF67BC1D1D2+3672530]
+E       	GetHandleVerifier [0x00007FF67BC12153+3627347]
+E       	GetHandleVerifier [0x00007FF67B97092A+868650]
+E       	(No symbol) [0x00007FF67B812FFF]
+E       	(No symbol) [0x00007FF67B80F4A4]
+E       	(No symbol) [0x00007FF67B80F646]
+E       	(No symbol) [0x00007FF67B7FEAA9]
+E       	BaseThreadInitThunk [0x00007FFFCD147614+20]
+E       	RtlUserThreadStart [0x00007FFFCF0826A1+33]
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:232: InvalidSelectorException</failure></testcase></testsuite></testsuites>

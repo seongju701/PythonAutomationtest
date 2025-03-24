@@ -1,0 +1,1 @@
+{"ae038d837b9d6df85d3f0fb900bba974":{"statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1},"items":[{"uid":"8320721751fb5035","reportUrl":"http://localhost:8080/job/SeleniumPython/7/allure/#testresult/8320721751fb5035","status":"passed","time":{"start":1742788222150,"stop":1742788224104,"duration":1954}}]}}
