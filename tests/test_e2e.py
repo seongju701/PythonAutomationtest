@@ -41,5 +41,5 @@ class TestOne:
         print(stPopup)
         print("하하2222")
         
-        print("브렌치")
+        print("브렌치!!!!!!!!")
 
