@@ -39,5 +39,5 @@ class TestOne:
         setup.switch_to.window(setup.window_handles[2])
         stPopup = setup.find_element(By.XPATH,"/html/body/div[1]/div[1]/h1").text
         print(stPopup)
-        print("하하")
+        print("하하2222")
 
