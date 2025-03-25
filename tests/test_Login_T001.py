@@ -2,17 +2,16 @@ from time import sleep
 
 import pytest
 from selenium.webdriver.common.by import By
-from selenium.webdriver.ie.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
 
 @pytest.mark.usefixtures("setup")
 class TestOne:
-    def test_Login_T001(self,setup):
+    def test_Login_T001(self,setup,login_credentials):
         #로그인
-        setup.find_element(By.XPATH,"/html/body/div[1]/div/div[2]/div/div[1]/form/fieldset/div[1]/input[1]").send_keys("adm_sjcho88")
-        setup.find_element(By.XPATH, "//*[@id=\"login_pwd\"]").send_keys("89016410")
+        setup.find_element(By.XPATH,"/html/body/div[1]/div/div[2]/div/div[1]/form/fieldset/div[1]/input[1]").send_keys(login_credentials["adm_id"])
+        setup.find_element(By.XPATH, "//*[@id=\"login_pwd\"]").send_keys(login_credentials["adm_pw"])
         setup.find_element(By.XPATH,"/html/body/div[1]/div/div[2]/div/div[1]/form/fieldset/div[1]/button").click()
         # 기본창 메뉴 확인
         setup.switch_to.window(setup.window_handles[0])
@@ -29,7 +28,7 @@ class TestOne:
         #팝업처리
         setup.switch_to.window(setup.window_handles[1])
         #학생검색
-        setup.find_element(By.XPATH,"//*[@id=\"s_keyword\"]").send_keys("testplan98")
+        setup.find_element(By.XPATH,"//*[@id=\"s_keyword\"]").send_keys(login_credentials["stu_id"])
         setup.find_element(By.XPATH,"/html/body/div[1]/form/div[2]/div/div[1]/div/div[2]/button").click()
         #명시적 대기
         wait = WebDriverWait(setup,5)
@@ -39,7 +38,5 @@ class TestOne:
         setup.switch_to.window(setup.window_handles[2])
         stPopup = setup.find_element(By.XPATH,"/html/body/div[1]/div[1]/h1").text
         print(stPopup)
-        print("하하2222")
-        
-        print("브렌치!!!!!!!!")
+
 

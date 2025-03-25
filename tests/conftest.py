@@ -11,3 +11,13 @@ def setup():
     driver.implicitly_wait(10)
     yield driver
     driver.quit()
+
+@pytest.fixture(scope="session")
+def login_credentials():
+    return {
+        "adm_id": "adm_sjcho88",
+        "adm_pw": "89016410",
+        "stu_id": "testplan98"
+    }
+
+
