@@ -34,3 +34,14 @@ def login_credentials():
         "ID2" : "slsss002",
         "PW2" : "0002"
     }
+
+
+@pytest.fixture(scope="function")
+def login_process(driver):
+    def _login(ID, PW):
+        # 로그인 절차 수행
+        driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR,value="new UiSelector().className(\"android.widget.EditText\").instance(0)").send_keys(ID)  # ID 입력
+        driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR,value="new UiSelector().className(\"android.widget.EditText\").instance(1)").send_keys(PW)  # PW 입력
+        driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR, value="new UiSelector().text(\"로그인\")").click()  # 로그인 클릭
+        return driver  # 로그인 후 드라이버 반환
+    return _login
