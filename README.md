@@ -9,4 +9,4 @@
 Selenium | Appium | Jenkins | Python | GitHub  
 
 ## 🔧 사용 툴  
-PyCharm | Maven | Pytest | Allure Report | TestNG Report  
+PyCharm | Pytest | Allure Report | Junit Report | GitHub
