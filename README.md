@@ -1,4 +1,4 @@
-#프로젝트
+# 프로젝트
 ## E-learning 학습기(Andriod) - 주요 기능 호환성 자동화
 ## 관리자페이지 (Web) - 회원생성, 고객관리, 주문 자동화  
 ### Python 기반 **Selenium**, **Appium**, **Jenkins**, **CI/CD**  파이프라인 구축 <br>  
